@@ -17,4 +17,9 @@ export class ActividadService {
   calcularTiempos(): Observable<any> {
     return this.http.post(`${this.apiUrl}/calcular-tiempos`, {});
   }
+  
+  limpiarActividades(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/limpiar-actividades`, {});
+  }
+  
 }
