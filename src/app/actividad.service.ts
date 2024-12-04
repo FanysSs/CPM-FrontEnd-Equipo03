@@ -22,4 +22,5 @@ export class ActividadService {
     return this.http.post(`${this.apiUrl}/limpiar-actividades`, {});
   }
   
+  
 }
