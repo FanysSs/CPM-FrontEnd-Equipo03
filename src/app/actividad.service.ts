@@ -21,5 +21,19 @@ export class ActividadService {
   limpiarActividades(): Observable<any> {
     return this.http.post(`${this.apiUrl}/limpiar-actividades`, {});
   }
+  guardarCPM(proyectoId: number, actividades: any[]): Observable<any> {
+    return this.http.post('http://localhost:3000/guardar-cpm', { proyectoId, actividades });
+  }
+  
+  obtenerProyectos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/proyectos`);
+  }
+
+  obtenerActividadesPorProyecto(proyectoId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/actividades-cpm/${proyectoId}`);
+  }
+  crearProyecto(proyecto: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/proyectos`, proyecto);
+  }
   
 }
