@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActividadService } from '../actividad.service';
 import * as joint from 'jointjs';
 
@@ -8,9 +8,57 @@ import * as joint from 'jointjs';
 })
 export class DiagramaComponent {
   actividades: any[] = [];
+  proyectos: any[] = [];
+  selectedProyectoId: number = 1;
   graph: any;
 
   constructor(private actividadService: ActividadService) {}
+
+  ngOnInit() {
+    this.obtenerProyectos();
+  }
+
+  obtenerProyectos() {
+    this.actividadService.obtenerProyectos().subscribe({
+      next: (response) => {
+        this.proyectos = response;
+        console.log('Proyectos cargados:', this.proyectos);
+      },
+      error: (error) => {
+        console.error('Error al obtener proyectos:', error);
+      }
+    });
+  }
+
+  guardarActividades() {
+    if (!this.selectedProyectoId) {
+      alert('Por favor selecciona un proyecto');
+      return;
+    }
+
+    const actividadesConDatos = this.actividades.map(actividad => ({
+      nombre: actividad.nombre,
+      duracion: actividad.duracion,
+      estart: actividad.estart,
+      efinish: actividad.efinish,
+      lstart: actividad.lstart,
+      lfinish: actividad.lfinish,
+      htotal: actividad.htotal,
+      hlibre: actividad.hlibre,
+      es_critica: actividad.htotal === 0,
+      predecesores: actividad.predecesores,
+      sucesores: actividad.sucesores
+    }));
+
+    this.actividadService.guardarCPM(this.selectedProyectoId, actividadesConDatos).subscribe({
+      next: (response) => {
+        console.log('Actividades CPM guardadas:', response);
+      },
+      error: (error) => {
+        console.error('Error al guardar actividades CPM:', error);
+      }
+    });
+  }
 
   generarDiagrama() {
     this.actividadService.calcularTiempos().subscribe({
