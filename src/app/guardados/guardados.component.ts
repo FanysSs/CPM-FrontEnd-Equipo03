@@ -3,8 +3,8 @@ import { ActividadService } from '../actividad.service';  // Asegúrate de impor
 
 @Component({
   selector: 'app-proyectos-guardados',
-  templateUrl: './guardados.component.component.html',
-  styleUrls: ['./guardados.component.component.css']
+  templateUrl: './guardados.component.html',
+  styleUrls: ['./guardados.component.css']
 })
 
 export class ProyectosGuardadosComponent implements OnInit {
